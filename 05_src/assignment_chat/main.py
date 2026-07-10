@@ -8,11 +8,11 @@ import json
 import requests
 import os
 
-from assignment_chat.prompts import return_instructions
-from assignment_chat.tools_1 import query_hyrule_compendium
-from assignment_chat.tools_2 import recommend_albums
-from assignment_chat.tools_web_search import web_search
+from course_chat.prompts import return_instructions
+from course_chat.tools_horoscope import get_horoscope
+from course_chat.tools_music import recommend_albums
 from utils.logger import get_logger
+
 
 
 _logs = get_logger(__name__)
@@ -21,16 +21,12 @@ load_dotenv(".secrets")
 
 
 chat_agent = init_chat_model(
-    "gpt-4o-mini", 
-    model_provider="openai",
-    base_url="https://k7uffyg03f.execute-api.us-east-1.amazonaws.com/prod/openai/v1",
-    api_key="any",
-    default_headers={"x-api-key": os.getenv("API_GATEWAY_KEY")}
-    )
-
-tools = [query_hyrule_compendium, recommend_albums, web_search]
+    "openai:gpt-4o-mini",
+)
+tools = [get_cat_facts, get_dog_facts, recommend_albums, get_horoscope]
 
 instructions = return_instructions()
+
 
 
 
